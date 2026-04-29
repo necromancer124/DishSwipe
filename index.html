@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DishSwipe | Discover Your Next Meal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="app.navigate('home')">
+            <span>🍳</span> DishSwipe
+        </div>
+        <nav>
+            <ul>
+                <li><a data-link="home" class="active">Home</a></li>
+                <li><a data-link="search">Search</a></li>
+                <li><a data-link="swipe">Smash or Pass</a></li>
+                <li><a data-link="favorites">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="app-container">
+        <!-- Home View -->
+        <section id="view-home" class="view active">
+            <div class="hero">
+                <h1>Find Recipes You'll Love</h1>
+                <p>Swipe through delicious meals or search for your favorite ingredients. Your kitchen's new best friend.</p>
+                <div class="cta-group">
+                    <button class="btn btn-primary" onclick="app.navigate('swipe')">Start Swiping</button>
+                    <button class="btn btn-secondary" onclick="app.navigate('search')">Browse All</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search View -->
+        <section id="view-search" class="view">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search by name (e.g. Pasta, Chicken)...">
+                <button class="btn btn-primary" onclick="app.performSearch()">Search</button>
+            </div>
+            <div id="search-results" class="recipe-grid"></div>
+        </section>
+
+        <!-- Smash or Pass View -->
+        <section id="view-swipe" class="view">
+            <div class="swipe-container">
+                <div id="swipe-card-target">
+                    <!-- Dynamic Card -->
+                </div>
+                <div class="swipe-actions">
+                    <button class="action-btn pass-btn" onclick="app.loadRandomRecipe()">✖</button>
+                    <button class="action-btn smash-btn" onclick="app.smashCurrent()">❤</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Details View -->
+        <section id="view-details" class="view">
+            <div id="details-target"></div>
+        </section>
+
+        <!-- Favorites View -->
+        <section id="view-favorites" class="view">
+            <h2 style="margin-bottom: 2rem;">Your Saved Recipes</h2>
+            <div id="favorites-results" class="recipe-grid"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

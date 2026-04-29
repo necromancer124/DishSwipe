@@ -1,0 +1,327 @@
+:root {
+    --primary: #ff4757;
+    --primary-dark: #e84118;
+    --secondary: #2f3542;
+    --accent: #2ed573;
+    --bg-light: #f1f2f6;
+    --white: #ffffff;
+    --text-main: #2f3542;
+    --text-muted: #747d8c;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+    --radius: 12px;
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Layout & Navigation */
+header {
+    background: var(--white);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+nav a:hover, nav a.active {
+    color: var(--primary);
+}
+
+main {
+    padding: 2rem 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Views */
+.view {
+    display: none;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Home Page */
+.hero {
+    text-align: center;
+    padding: 4rem 1rem;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--secondary);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.cta-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 28px;
+    border-radius: var(--radius);
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-dark); transform: scale(1.05); }
+.btn-secondary { background: var(--secondary); color: white; }
+.btn-secondary:hover { opacity: 0.9; }
+
+/* Search Section */
+.search-container {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 10px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #ddd;
+    border-radius: var(--radius);
+    outline: none;
+    font-size: 1rem;
+}
+
+input[type="text"]:focus {
+    border-color: var(--primary);
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.recipe-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+}
+
+.recipe-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.recipe-card-content {
+    padding: 1.5rem;
+}
+
+.recipe-card h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.tag {
+    background: var(--bg-light);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* Smash or Pass Section */
+.swipe-container {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.swipe-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    margin-bottom: 2rem;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease-out;
+}
+
+.swipe-card:hover {
+    transform: translateY(-5px);
+}
+
+.swipe-card img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.swipe-info {
+    padding: 2rem;
+}
+
+.swipe-actions {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.action-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+}
+
+.pass-btn { background: #eee; color: #555; }
+.pass-btn:hover { background: #ddd; transform: rotate(-10deg); }
+.smash-btn { background: var(--primary); color: white; }
+.smash-btn:hover { background: var(--primary-dark); transform: scale(1.1) rotate(10deg); }
+
+/* Recipe Details */
+.details-container {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.details-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.details-content {
+    padding: 3rem;
+}
+
+.ingredients-list {
+    margin: 1.5rem 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.ingredients-list li::before {
+    content: "•";
+    color: var(--primary);
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+/* Utilities */
+.loader {
+    text-align: center;
+    padding: 3rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.error-msg {
+    color: var(--primary);
+    text-align: center;
+    padding: 2rem;
+    background: #fff5f5;
+    border-radius: var(--radius);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+    .details-container {
+        grid-template-columns: 1fr;
+    }
+    .details-img {
+        height: 300px;
+    }
+    .hero h1 { font-size: 2.2rem; }
+}
+
+@media (max-width: 600px) {
+    nav ul { gap: 10px; font-size: 0.9rem; }
+    .hero { padding: 2rem 0; }
+    .details-content { padding: 1.5rem; }
+    .ingredients-list { grid-template-columns: 1fr; }
+}
