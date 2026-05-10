@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Details | DishSwipe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main id="app-container">
+        <!-- Details View -->
+        <section class="details-section">
+            <div id="details-target"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Загружаем детали рецепта при загрузке страницы
+        window.addEventListener('DOMContentLoaded', () => {
+            app.loadDetailsPage();
+        });
+    </script>
+</body>
+</html>

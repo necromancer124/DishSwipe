@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smash or Pass | DishSwipe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main id="app-container">
+        <section class="swipe-section">
+            <div class="swipe-container">
+                <div id="swipe-card-target">
+                    <!-- Dynamic Card -->
+                </div>
+                <div class="swipe-actions">
+                    <button class="action-btn pass-btn" onclick="app.passCurrent()">✖</button>
+                    <button class="action-btn smash-btn" onclick="app.smashCurrent()">❤</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
