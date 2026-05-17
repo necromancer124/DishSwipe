@@ -40,12 +40,16 @@ const app = {
         const pathname = window.location.pathname;
         const filename = pathname.split('/').pop() || 'index.html';
         
-        if (filename === 'index.html' || filename === '') return 'index';
-        if (filename === 'search.html') return 'search';
-        if (filename === 'swipe.html') return 'swipe';
-        if (filename === 'favorites.html') return 'favorites';
-        
-        return 'index';
+        switch (filename) {
+            case 'search.html':
+                return 'search';
+            case 'swipe.html':
+                return 'swipe';
+            case 'favorites.html':
+                return 'favorites';
+            default:
+                return 'index';
+        }
     },
 
     // --- Навигация ---
@@ -212,7 +216,6 @@ const app = {
         `).join('');
     },
 
-    // --- DETAILS: Shows recipe details (works from any page) ---
     async showDetails(id) {
         const target = document.getElementById('details-target');
         
