@@ -2,6 +2,14 @@
  * DishSwipe Application Core
  * Работает с отдельными HTML-страницами
  */
+
+const HREF_TO_PAGE = {
+    'index.html': 'index',
+    'swipe.html': 'swipe',
+    'search.html': 'search',
+    'favorites.html': 'favorites'
+};
+
 const app = {
     baseUrl: 'https://www.themealdb.com/api/json/v1/1/',
     currentRecipe: null,
@@ -19,7 +27,7 @@ const app = {
         this.setupNavigation();
         
         // Вызываем инициализацию для конкретной страницы
-        switch(currentPage) {
+        switch (currentPage) {
             case 'index':
                 // На главной странице ничего особенного не нужно
                 break;
@@ -40,16 +48,7 @@ const app = {
         const pathname = window.location.pathname;
         const filename = pathname.split('/').pop() || 'index.html';
         
-        switch (filename) {
-            case 'search.html':
-                return 'search';
-            case 'swipe.html':
-                return 'swipe';
-            case 'favorites.html':
-                return 'favorites';
-            default:
-                return 'index';
-        }
+        return HREF_TO_PAGE[filename] ?? 'index';
     },
 
     // --- Навигация ---
@@ -58,21 +57,13 @@ const app = {
         links.forEach(link => {
             const href = link.getAttribute('href');
             const currentPage = this.getCurrentPage();
-            const linkPage = this.getPageFromHref(href);
+            const linkPage = HREF_TO_PAGE[href] ?? 'index';
             
             // Помечаем текущую страницу как активную
             if (linkPage === currentPage) {
                 link.classList.add('active');
             }
         });
-    },
-
-    getPageFromHref(href) {
-        if (href === 'index.html' || href === '/') return 'index';
-        if (href === 'search.html') return 'search';
-        if (href === 'swipe.html') return 'swipe';
-        if (href === 'favorites.html') return 'favorites';
-        return 'index';
     },
 
     // --- Рендеринг header ---
