@@ -24,6 +24,7 @@ const app = {
         const currentPage = this.getCurrentPage();
         
         this.renderHeader();
+        this.renderThemeSwitcher();
         this.setupNavigation();
         
         // Вызываем инициализацию для конкретной страницы
@@ -73,7 +74,7 @@ const app = {
         if (!container) return;
 
         try {
-            const response = await fetch('header.inc');
+            const response = await fetch('includes/header.inc');
             if (!response.ok) throw new Error(`Load error 67: ${response.status}`);
             
             const htmlContent = await response.text();
@@ -83,6 +84,21 @@ const app = {
             this.setupNavigation();
         } catch (error) {
             console.error('Header loading error:', error);
+        }
+    },
+
+    async renderThemeSwitcher() {
+        const container = document.getElementById('theme-switcher');
+        if (!container) return;
+
+        try {
+            const response = await fetch('includes/theme-switcher.inc');
+            if (!response.ok) throw new Error(`Load error: ${response.status}`);
+
+            container.innerHTML = await response.text();
+            Theme.bindSwitcher(container.firstElementChild || container);
+        } catch (error) {
+            console.error('Theme switcher loading error:', error);
         }
     },
 
