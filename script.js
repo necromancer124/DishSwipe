@@ -265,7 +265,7 @@ const app = {
                     </ul>
 
                     <h3 style="margin-top:2rem">Instructions</h3>
-                    <p style="white-space: pre-line; color: #555;">${meal.strInstructions}</p>
+                    <p class="details-text">${meal.strInstructions}</p>
                     
                     <div class="details-actions" style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; justify-content: space-between; margin-top:2rem;">
                         ${meal.strYoutube ? `

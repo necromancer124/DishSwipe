@@ -294,6 +294,11 @@ input[type="text"]:focus {
     font-weight: bold;
 }
 
+.details-text {
+    white-space: pre-line;
+    color: #555;
+}
+
 /* Utilities */
 .loader {
     text-align: center;

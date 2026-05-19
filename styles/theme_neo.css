@@ -155,7 +155,7 @@ main {
 .hero h1 {
     font-size: 4rem;
     margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, var(--white) 0%, var(--accent) 100%);
+    background: linear-gradient(135deg, var(--primary), var(--accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -217,9 +217,9 @@ main {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    background: linear-gradient(135deg, var(--primary-dark), var(--accent));
     color: white;
-    border-color: var(--primary);
+    border-color: var(--primary-dark);
     box-shadow: 0 4px 20px rgba(255, 0, 110, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -527,6 +527,11 @@ input[type="text"]:focus {
     color: var(--primary);
     margin-right: 8px;
     font-weight: bold;
+}
+
+.details-text {
+    white-space: pre-line;
+    color: var(--white);
 }
 
 /* Utilities */
