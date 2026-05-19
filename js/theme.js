@@ -3,16 +3,20 @@
  */
 const Theme = {
     STORAGE_KEY: 'dishswipe_theme',
-    DEFAULT: 'styles/common.css',
+    DEFAULT: 'styles/default.css',
     VALID: new Set([
-        'styles/common.css',
+        'styles/default.css',
         'styles/theme_kawaii.css',
         'styles/theme_neo.css'
     ]),
+
+    normalizeHref(href) {
+        return href === 'styles/common.css' ? this.DEFAULT : href;
+    },
     SWITCH_MS: 280,
 
     getCurrent() {
-        const stored = localStorage.getItem(this.STORAGE_KEY) || this.DEFAULT;
+        const stored = this.normalizeHref(localStorage.getItem(this.STORAGE_KEY) || this.DEFAULT);
         return this.VALID.has(stored) ? stored : this.DEFAULT;
     },
 
@@ -27,6 +31,7 @@ const Theme = {
     },
 
     apply(href, animate = true) {
+        href = this.normalizeHref(href);
         if (!this.VALID.has(href)) return Promise.resolve();
 
         const link = document.getElementById('theme-stylesheet');

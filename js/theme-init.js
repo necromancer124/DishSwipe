@@ -3,14 +3,18 @@
  */
 (function () {
     const STORAGE_KEY = 'dishswipe_theme';
-    const DEFAULT_THEME = 'styles/common.css';
+    const DEFAULT_THEME = 'styles/default.css';
     const VALID_THEMES = new Set([
-        'styles/common.css',
+        'styles/default.css',
         'styles/theme_kawaii.css',
         'styles/theme_neo.css'
     ]);
 
     let href = localStorage.getItem(STORAGE_KEY) || DEFAULT_THEME;
+    if (href === 'styles/common.css') {
+        href = DEFAULT_THEME;
+        localStorage.setItem(STORAGE_KEY, DEFAULT_THEME);
+    }
     if (!VALID_THEMES.has(href)) {
         href = DEFAULT_THEME;
     }

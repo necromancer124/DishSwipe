@@ -15,7 +15,7 @@
         aria-label="Theme selection"
         hidden
     >
-        <button type="button" class="theme-option" role="option" data-theme-href="styles/common.css">Default</button>
+        <button type="button" class="theme-option" role="option" data-theme-href="styles/default.css">Default</button>
         <button type="button" class="theme-option" role="option" data-theme-href="styles/theme_kawaii.css">Kawaii</button>
         <button type="button" class="theme-option" role="option" data-theme-href="styles/theme_neo.css">Neo</button>
     </div>

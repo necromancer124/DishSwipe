@@ -10,6 +10,8 @@ const HREF_TO_PAGE = {
     'favorites.html': 'favorites'
 };
 
+const INCLUDES = ['header', 'footer', 'theme-switcher'];
+
 const app = {
     baseUrl: 'https://www.themealdb.com/api/json/v1/1/',
     currentRecipe: null,
@@ -23,8 +25,12 @@ const app = {
         // Определяем текущую страницу и инициализируем её
         const currentPage = this.getCurrentPage();
         
-        this.renderHeader();
-        this.renderThemeSwitcher();
+        this.renderInclude('header', () => {
+            this.setupNavigation();
+            this.setupMobileNav();
+        });
+        this.renderInclude('footer');
+        this.renderInclude('theme-switcher', (container) => Theme.bindSwitcher(container.firstElementChild || container));
         this.setupNavigation();
         
         // Вызываем инициализацию для конкретной страницы
@@ -67,38 +73,53 @@ const app = {
         });
     },
 
-    // --- Рендеринг header ---
-    async renderHeader() {
-        const container = document.getElementById('header');
+    setupMobileNav() {
+        const header = document.querySelector('header');
+        const burger = document.querySelector('.burger-btn');
+        const nav = document.getElementById('main-nav');
+        if (!header || !burger) return;
+
+        const setOpen = (open) => {
+            header.classList.toggle('nav-open', open);
+            document.body.classList.toggle('nav-open', open);
+            burger.setAttribute('aria-expanded', String(open));
+            burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        };
+
+        burger.addEventListener('click', () => {
+            setOpen(!header.classList.contains('nav-open'));
+        });
+
+        nav?.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => setOpen(false));
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setOpen(false);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!header.classList.contains('nav-open')) return;
+            if (header.contains(e.target)) return;
+            setOpen(false);
+        });
+    },
+
+    async renderInclude(name, callback) {
+        const container = document.getElementById(name);
         
         if (!container) return;
 
         try {
-            const response = await fetch('includes/header.inc');
-            if (!response.ok) throw new Error(`Load error 67: ${response.status}`);
+            const response = await fetch(`includes/${name}.inc`);
+            if (!response.ok) throw new Error(`Load error: ${response.status}`);
             
             const htmlContent = await response.text();
             container.innerHTML = htmlContent;
 
-            // Устанавливаем активный класс для текущей страницы
-            this.setupNavigation();
+            if (typeof(callback) === 'function') callback(container);
         } catch (error) {
-            console.error('Header loading error:', error);
-        }
-    },
-
-    async renderThemeSwitcher() {
-        const container = document.getElementById('theme-switcher');
-        if (!container) return;
-
-        try {
-            const response = await fetch('includes/theme-switcher.inc');
-            if (!response.ok) throw new Error(`Load error: ${response.status}`);
-
-            container.innerHTML = await response.text();
-            Theme.bindSwitcher(container.firstElementChild || container);
-        } catch (error) {
-            console.error('Theme switcher loading error:', error);
+            console.error(`${name} include loading error:`, error);
         }
     },
 
@@ -134,13 +155,13 @@ const app = {
         const target = document.getElementById('swipe-card-target');
         target.innerHTML = `
             <div class="swipe-card" onclick="app.showDetails('${meal.idMeal}')">
-                <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
                 <div class="swipe-info">
                     <span class="tag">${meal.strCategory}</span>
                     <h2 style="margin-top:10px">${meal.strMeal}</h2>
                     <p style="color:#777">${meal.strArea} Cuisine</p>
                     <p style="margin-top:10px; font-size: 0.9rem; color: var(--primary)">Tap to see full recipe</p>
                 </div>
+                <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
             </div>
         `;
     },
@@ -326,7 +347,7 @@ const app = {
                 <div class="recipe-card-content">
                     <span class="tag">${meal.strCategory}</span>
                     <h3 style="margin-top:8px">${meal.strMeal}</h3>
-                    <button class="btn" style="color:var(--primary); font-size:0.7rem; padding:5px" onclick="event.stopPropagation(); app.removeFavorite('${meal.idMeal}')">Remove</button>
+                    <button class="btn btn-secondary" style="margin-bottom:1rem; padding: 5px 15px; font-size:0.8rem" onclick="event.stopPropagation(); app.removeFavorite('${meal.idMeal}')">Remove</button>
                 </div>
             </div>
         `).join('');
