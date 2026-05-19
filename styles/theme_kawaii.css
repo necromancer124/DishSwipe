@@ -126,6 +126,8 @@ nav a:hover::before, nav a.active::before {
 
 /* Burger & mobile nav */
 .burger-btn {
+    --burger-line-height: 3px;
+
     border-radius: 50%;
     transition: var(--transition);
 }
@@ -141,7 +143,6 @@ nav a:hover::before, nav a.active::before {
 }
 
 .burger-line {
-    height: 3px;
     border-radius: 3px;
     background: linear-gradient(90deg, var(--primary), var(--secondary));
 }

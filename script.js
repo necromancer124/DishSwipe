@@ -90,10 +90,6 @@ const app = {
             setOpen(!header.classList.contains('nav-open'));
         });
 
-        nav?.querySelectorAll('a').forEach((link) => {
-            link.addEventListener('click', () => setOpen(false));
-        });
-
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') setOpen(false);
         });
