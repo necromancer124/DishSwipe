@@ -31,7 +31,6 @@ const app = {
         });
         this.renderInclude('footer');
         this.renderInclude('theme-switcher', (container) => Theme.bindSwitcher(container.firstElementChild || container));
-        this.setupNavigation();
         
         // Вызываем инициализацию для конкретной страницы
         switch (currentPage) {
