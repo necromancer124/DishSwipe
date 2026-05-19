@@ -90,6 +90,7 @@ nav a.active {
     display: none;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 5px;
     width: 2.5rem;
     height: 2.5rem;
@@ -110,7 +111,7 @@ nav a.active {
 }
 
 header.nav-open .burger-line:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+    transform: translateY(8px) rotate(45deg);
 }
 
 header.nav-open .burger-line:nth-child(2) {
@@ -118,7 +119,7 @@ header.nav-open .burger-line:nth-child(2) {
 }
 
 header.nav-open .burger-line:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 main {
