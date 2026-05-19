@@ -524,15 +524,6 @@ input[type="text"]:focus {
     .hero h1 {
         font-size: var(--hero-title-size-md, 2.2rem);
     }
-
-    .swipe-card {
-        flex-direction: column-reverse;
-        height: 70vh;
-    }
-
-    .swipe-card img {
-        aspect-ratio: 1/1;
-    }
 }
 
 @media (orientation: portrait) {
@@ -585,6 +576,15 @@ input[type="text"]:focus {
         display: block;
         padding: 1rem 0;
         font-size: 1rem;
+    }
+
+    .swipe-card {
+        flex-direction: column-reverse;
+        height: 70vh;
+    }
+
+    .swipe-card img {
+        aspect-ratio: 4/5;
     }
 }
 

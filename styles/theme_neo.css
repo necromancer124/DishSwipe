@@ -652,6 +652,16 @@ input[type="text"]:focus {
     font-size: 1.1rem;
 }
 
+@media (orientation: portrait) {
+    .swipe-card {
+        max-height: 70vh;
+        flex-direction: column-reverse;
+    }
+    .swipe-card img {
+        aspect-ratio: 6/7;
+    }
+}
+
 @media (max-width: 850px) {
     .details-container {
         grid-template-columns: 1fr;
