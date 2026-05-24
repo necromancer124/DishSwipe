@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Details | DishSwipe</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <script src="js/theme-init.js"></script>
+    <noscript><link rel="stylesheet" href="styles/default.css"></noscript>
 </head>
 <body>
     <div id="header"></div>
+    <div id="theme-switcher"></div>
 
     <main id="app-container">
         <!-- Details View -->
@@ -16,9 +19,11 @@
         </section>
     </main>
 
+    <div id="footer"></div>
+
+    <script src="js/theme.js"></script>
     <script src="script.js"></script>
     <script>
-        // Загружаем детали рецепта при загрузке страницы
         window.addEventListener('DOMContentLoaded', () => {
             app.loadDetailsPage();
         });

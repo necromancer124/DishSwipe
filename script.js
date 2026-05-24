@@ -10,6 +10,8 @@ const HREF_TO_PAGE = {
     'favorites.html': 'favorites'
 };
 
+const INCLUDES = ['header', 'footer', 'theme-switcher'];
+
 const app = {
     baseUrl: 'https://www.themealdb.com/api/json/v1/1/',
     currentRecipe: null,
@@ -23,13 +25,17 @@ const app = {
         // Определяем текущую страницу и инициализируем её
         const currentPage = this.getCurrentPage();
         
-        this.renderHeader();
-        this.setupNavigation();
+        this.renderInclude('header', () => {
+            this.setupNavigation();
+            this.setupMobileNav();
+        });
+        this.renderInclude('footer');
+        this.renderInclude('theme-switcher', (container) => Theme.bindSwitcher(container.firstElementChild || container));
         
         // Вызываем инициализацию для конкретной страницы
         switch (currentPage) {
             case 'index':
-                // На главной странице ничего особенного не нужно
+                this.loadCounter();
                 break;
             case 'swipe':
                 this.loadRandomRecipe();
@@ -66,23 +72,49 @@ const app = {
         });
     },
 
-    // --- Рендеринг header ---
-    async renderHeader() {
-        const container = document.getElementById('header');
+    setupMobileNav() {
+        const header = document.querySelector('header');
+        const burger = document.querySelector('.burger-btn');
+        const nav = document.getElementById('main-nav');
+        if (!header || !burger) return;
+
+        const setOpen = (open) => {
+            header.classList.toggle('nav-open', open);
+            document.body.classList.toggle('nav-open', open);
+            burger.setAttribute('aria-expanded', String(open));
+            burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        };
+
+        burger.addEventListener('click', () => {
+            setOpen(!header.classList.contains('nav-open'));
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setOpen(false);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!header.classList.contains('nav-open')) return;
+            if (header.contains(e.target)) return;
+            setOpen(false);
+        });
+    },
+
+    async renderInclude(name, callback) {
+        const container = document.getElementById(name);
         
         if (!container) return;
 
         try {
-            const response = await fetch('header.inc');
-            if (!response.ok) throw new Error(`Load error 67: ${response.status}`);
+            const response = await fetch(`includes/${name}.inc`);
+            if (!response.ok) throw new Error(`Load error: ${response.status}`);
             
             const htmlContent = await response.text();
             container.innerHTML = htmlContent;
 
-            // Устанавливаем активный класс для текущей страницы
-            this.setupNavigation();
+            if (typeof(callback) === 'function') callback(container);
         } catch (error) {
-            console.error('Header loading error:', error);
+            console.error(`${name} include loading error:`, error);
         }
     },
 
@@ -118,13 +150,13 @@ const app = {
         const target = document.getElementById('swipe-card-target');
         target.innerHTML = `
             <div class="swipe-card" onclick="app.showDetails('${meal.idMeal}')">
-                <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
                 <div class="swipe-info">
                     <span class="tag">${meal.strCategory}</span>
                     <h2 style="margin-top:10px">${meal.strMeal}</h2>
                     <p style="color:#777">${meal.strArea} Cuisine</p>
                     <p style="margin-top:10px; font-size: 0.9rem; color: var(--primary)">Tap to see full recipe</p>
                 </div>
+                <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
             </div>
         `;
     },
@@ -157,6 +189,44 @@ const app = {
             
             setTimeout(() => this.loadRandomRecipe(), 300);
         }
+    },
+
+    // -----------------COUNTER-------------
+    async loadCounter() {
+        const section = document.getElementById('ramune-counter'); 
+        const display = document.getElementById('animated-counter');
+        if (!display || !section) return;
+
+        try {
+            // Fetching from your student server
+            const response = await fetch('https://student166.atuda.co/bottle/counter.php');
+            const data = await response.text();
+            const finalNumber = parseInt(data.trim());
+
+            if (!isNaN(finalNumber)) {
+                // Allows you to trigger a fade-in or effect via your CSS file
+                section.classList.add('loaded'); 
+                this.animateValue(display, 0, finalNumber, 2000); 
+            }
+        } catch (err) {
+            console.error("Ramune Counter Error:", err);
+        }
+    },
+
+    animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            
+            // Updates the number based on the time elapsed
+            obj.innerHTML = Math.floor(progress * (end - start) + start);
+            
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
     },
 
     // --- SEARCH PAGE: Search Logic ---
@@ -249,7 +319,7 @@ const app = {
                     </ul>
 
                     <h3 style="margin-top:2rem">Instructions</h3>
-                    <p style="white-space: pre-line; color: #555;">${meal.strInstructions}</p>
+                    <p class="details-text">${meal.strInstructions}</p>
                     
                     <div class="details-actions" style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; justify-content: space-between; margin-top:2rem;">
                         ${meal.strYoutube ? `
@@ -310,7 +380,7 @@ const app = {
                 <div class="recipe-card-content">
                     <span class="tag">${meal.strCategory}</span>
                     <h3 style="margin-top:8px">${meal.strMeal}</h3>
-                    <button class="btn" style="color:var(--primary); font-size:0.7rem; padding:5px" onclick="event.stopPropagation(); app.removeFavorite('${meal.idMeal}')">Remove</button>
+                    <button class="btn btn-secondary" style="margin-bottom:1rem; padding: 5px 15px; font-size:0.8rem" onclick="event.stopPropagation(); app.removeFavorite('${meal.idMeal}')">Remove</button>
                 </div>
             </div>
         `).join('');
@@ -322,6 +392,7 @@ const app = {
         this.renderFavorites();
     }
 };
+
 
 // Запуск приложения
 window.onload = () => app.init();

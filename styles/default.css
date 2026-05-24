@@ -1,0 +1,13 @@
+:root {
+    --primary: #ff4757;
+    --primary-dark: #e84118;
+    --secondary: #2f3542;
+    --accent: #2ed573;
+    --bg-light: #f1f2f6;
+    --white: #ffffff;
+    --text-main: #2f3542;
+    --text-muted: #747d8c;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --radius: 12px;
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
