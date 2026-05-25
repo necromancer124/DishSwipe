@@ -1,114 +1,53 @@
-# DishSwipe - Multi-Page Structure
+# DishSwipe 🍽️
 
-## 📁 Структура файлов
+DishSwipe is a vanilla JavaScript web application that makes finding your next meal engaging and interactive. Users can discover new recipes "Tinder-style" via a Smash-or-Pass interface, search for specific dishes, and save their favorites for later—all powered by **TheMealDB API**.
 
-```
-project/
-├── index.html          # Главная страница (Home)
-├── search.html         # Поиск рецептов
-├── swipe.html          # Smash or Pass (свайп)
-├── favorites.html      # Избранные рецепты
-├── details.html        # Детали рецепта
-├── header.inc          # Общий header компонент
-├── style.css           # Глобальные стили
-└── script.js           # Основная логика приложения
-```
+---
 
-## 🔄 Как это работает
+##  Features
 
-### 1. **index.html** - Главная страница
-- Простая посадочная страница с CTA кнопками
-- Навигация в другие разделы
-- Инициализирует header и базовую логику приложения
+* **Smash or Pass (Swipe):** Discover random recipes. Tap "Smash" (❤) to save a recipe to your favorites, or "Pass" (✖) to skip to the next one.
+* **Search Functionality:** Look up specific recipes by name.
+* **Favorites Manager:** Keep track of your saved recipes. Favorites are stored persistently in your browser.
+* **Detailed Recipe Views:** Get comprehensive meal details, including high-quality images, category tags, step-by-step instructions, ingredient lists with measurements, and direct YouTube video links.
+* **Dynamic Components:** The application uses dynamic includes for the header, footer, and theme switcher, keeping the codebase DRY (Don't Repeat Yourself).
+* **Dark/Light Theme Support:** Integrated theme switching built directly into the UI.
 
-### 2. **search.html** - Поиск
-- Поле для ввода запроса
-- Сетка результатов поиска
-- При клике на рецепт → переходит на `details.html`
+---
 
-### 3. **swipe.html** - Smash or Pass
-- Карточка с рецептом
-- Две кнопки: ✖ (Pass) и ❤ (Smash)
-- Smash добавляет в избранное
-- Pass просто загружает следующий рецепт
+##  Project Structure
 
-### 4. **favorites.html** - Избранное
-- Сетка с сохраненными рецептами (из localStorage)
-- Кнопка Remove для удаления
-- При клике на карточку → переходит на `details.html`
+| File / Directory | Purpose |
+| --- | --- |
+| `index.html` | The landing page featuring a hero section and primary navigation CTAs. |
+| `swipe.html` | The "Smash or Pass" interface that loads random meals via the API. |
+| `search.html` | The search interface with a text input and results grid. |
+| `favorites.html` | Displays all recipes the user has saved. |
+| `details.html` | A dedicated view for rendering a single recipe's full details. |
+| `script.js` | The core application logic, API fetching, and state management. |
+| `styles/` | Directory for CSS files (`common.css`, `default.css`). |
+| `js/` | Directory for theme logic (`theme-init.js`, `theme.js`). |
+| `includes/` | Contains `.inc` files (`header.inc`, `footer.inc`) fetched dynamically by `script.js`. |
 
-### 5. **details.html** - Детали рецепта
-- Загружает рецепт из sessionStorage
-- Показывает полную информацию (ингредиенты, инструкции, видео YouTube)
-- Кнопка Back возвращает на предыдущую страницу
+---
 
-### 6. **header.inc** - Компонент навигации
-- Загружается динамически в каждую страницу
-- Содержит логотип и навигационное меню
-- Автоматически помечает активную страницу
+## 🛠️ Technical Architecture
 
-## 🔄 Логика переходов между страницами
+### API Integration
 
-```
-index.html
-    ↓
-search.html ──→ details.html
-    ↑────────────────┘
+The application relies on [TheMealDB](https://www.themealdb.com/api.php).
 
-swipe.html ────→ details.html
-    ↑────────────────┘
+* **Random Recipe:** `api/json/v1/1/random.php`
+* **Search Recipe:** `api/json/v1/1/search.php?s={query}`
+* **Lookup Recipe Details:** `api/json/v1/1/lookup.php?i={id}`
 
-favorites.html ──→ details.html
-    ↑────────────────┘
-```
+### State & Data Management
 
-## 💾 Хранение данных
+DishSwipe uses browser storage to manage user data and page transitions without requiring a backend database.
 
-### localStorage
-- Ключ: `dishswipe_favs`
-- Хранит массив избранных рецептов
-- Сохраняется автоматически при добавлении/удалении
+* **`localStorage`:** Uses the key `dishswipe_favs` to permanently store an array of the user's "Smashed" (favorited) recipes. This ensures data persists even if the user closes the browser.
+* **`sessionStorage`:** Uses the key `selectedMealId` to temporarily hold a recipe's ID when a user clicks a recipe card from the Search, Swipe, or Favorites pages. The `details.html` page reads this ID to fetch the full recipe, and then clears the storage.
 
-### sessionStorage
-- Ключ: `selectedMealId`
-- Временное хранилище ID рецепта для details.html
-- Очищается после использования
+### Navigation Flow
 
-## 🎯 Основные функции в script.js
-
-| Функция | Назначение |
-|---------|-----------|
-| `init()` | Инициализация, определение текущей страницы |
-| `getCurrentPage()` | Определяет какая страница сейчас активна |
-| `renderHeader()` | Загружает header.inc и устанавливает активную ссылку |
-| `loadRandomRecipe()` | Загружает случайный рецепт (для swipe.html) |
-| `performSearch()` | Поиск рецептов по названию |
-| `showDetails()` | Показывает детали рецепта |
-| `loadDetailsPage()` | Загружает детали из sessionStorage (для details.html) |
-| `renderFavorites()` | Отображает избранные рецепты |
-| `smashCurrent()` | Добавляет в избранное с анимацией |
-| `passCurrent()` | Загружает следующий рецепт с анимацией |
-
-## ✨ Особенности
-
-✅ Чистая файловая навигация (без JS-навигации)
-✅ Использование localStorage для сохранения избранного
-✅ sessionStorage для передачи ID между страницами
-✅ Одна точка инициализации - вся логика в script.js
-✅ Автоматическое определение активной страницы в навигации
-✅ API интеграция с TheMealDB
-✅ Адаптивный дизайн
-✅ Плавные анимации и переходы
-
-## 🚀 Развертывание
-
-1. Убедитесь что все файлы находятся в одной папке
-2. Откройте `index.html` в браузере
-3. Приложение готово к использованию!
-
-## 📝 Примечания
-
-- API запросы к TheMealDB полностью безлимитные
-- Все данные загружаются асинхронно
-- Стили адаптированы для мобильных устройств
-- Header загружается динамически на каждой странице
+Because this is a multi-page application (MPA) rather than a single-page application (SPA), routing is handled via standard HTML links. `script.js` identifies the current page using `window.location.pathname` and initializes the relevant functions (e.g., `loadRandomRecipe()` for `swipe.html` or `renderFavorites()` for `favorites.html`).
