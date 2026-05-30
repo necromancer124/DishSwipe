@@ -9,7 +9,7 @@ const Theme = {
         'styles/theme_kawaii.css',
         'styles/theme_neo.css'
     ]),
-
+    // befor the Default css was called coommon so wwe dont want it to brake on other people computers that used the app before and saved it as common.css so this fixes it for them
     normalizeHref(href) {
         return href === 'styles/common.css' ? this.DEFAULT : href;
     },
