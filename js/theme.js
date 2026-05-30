@@ -9,15 +9,12 @@ const Theme = {
         'styles/theme_kawaii.css',
         'styles/theme_neo.css'
     ]),
-    // dosnt allow to load common as a theme (becoese it just common values for all themes)
-    normalizeHref(href) {
-        return href === 'styles/common.css' ? this.DEFAULT : href;
-    },
+
     SWITCH_MS: 280, // Theme transition timing miliseconds
 
     // Getting the theme from local storage
     getCurrent() {
-        const stored = this.normalizeHref(localStorage.getItem(this.STORAGE_KEY) || this.DEFAULT); 
+        const stored = localStorage.getItem(this.STORAGE_KEY) || this.DEFAULT; 
         return this.VALID.has(stored) ? stored : this.DEFAULT;
     },
 
@@ -33,8 +30,6 @@ const Theme = {
 
     // The main function for applying the needed theme
     apply(href, animate = true) {
-        href = this.normalizeHref(href);
-
         // Exiting if the selected theme isn't valid
         if (!this.VALID.has(href)) return Promise.resolve();
 

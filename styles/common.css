@@ -499,7 +499,7 @@ input[type="text"]:focus {
     outline-offset: 1px;
 }
 
-@media (max-width: 900px) {
+@media (orientation: portrait) {
     .theme-switcher {
         top: auto;
         bottom: 1rem;
@@ -510,27 +510,7 @@ input[type="text"]:focus {
         bottom: calc(100% + 0.5rem);
         top: auto;
     }
-}
 
-@media (max-width: 850px) {
-    .details-container {
-        grid-template-columns: 1fr;
-    }
-
-    .details-img {
-        height: var(--details-img-mobile-height, 300px);
-    }
-
-    .details-content {
-        max-height: none;
-    }
-
-    .hero h1 {
-        font-size: var(--hero-title-size-md, 2.2rem);
-    }
-}
-
-@media (orientation: portrait) {
     .burger-btn {
         display: flex;
     }

@@ -49,7 +49,7 @@ const app = {
         }
     },
 
-    // --- Определение текущей страницы ---
+    // Определение текущей страницы
     getCurrentPage() {
         const pathname = window.location.pathname;
         const filename = pathname.split('/').pop() || 'index.html';
@@ -57,7 +57,7 @@ const app = {
         return HREF_TO_PAGE[filename] ?? 'index';
     },
 
-    // --- Навигация ---
+    // Навигация
     setupNavigation() {
         const links = document.querySelectorAll('nav a');
         links.forEach(link => {
@@ -118,7 +118,7 @@ const app = {
         }
     },
 
-    // --- API Operations ---
+    // API Operations
     async fetchData(endpoint) {
         try {
             const response = await fetch(`${this.baseUrl}${endpoint}`);
@@ -130,7 +130,7 @@ const app = {
         }
     },
 
-    // --- SWIPE PAGE: Smash or Pass Logic ---
+    // SWIPE PAGE: Smash or Pass Logic
     async loadRandomRecipe() {
         const target = document.getElementById('swipe-card-target');
         if (!target) return;
@@ -191,7 +191,7 @@ const app = {
         }
     },
 
-    // --- SEARCH PAGE: Search Logic ---
+    // SEARCH PAGE: Search Logic
     setupSearchPage() {
         const searchInput = document.getElementById('search-input');
         if (searchInput) {
@@ -317,7 +317,7 @@ const app = {
         this.renderFavorites();
     },
 
-    // --- DETAILS PAGE: Load meal details from sessionStorage ---
+    // DETAILS PAGE: Load meal details from sessionStorage
     loadDetailsPage() {
         const mealId = sessionStorage.getItem('selectedMealId');
         if (mealId) {
@@ -326,7 +326,7 @@ const app = {
         }
     },
 
-    // --- FAVORITES PAGE: Favorites Logic ---
+    // FAVORITES PAGE: Favorites Logic
     renderFavorites() {
         const grid = document.getElementById('favorites-results');
         if (!grid) return;
