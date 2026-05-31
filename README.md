@@ -24,10 +24,10 @@ DishSwipe is a vanilla JavaScript web application that makes finding your next m
 | `search.html` | The search interface with a text input and results grid. |
 | `favorites.html` | Displays all recipes the user has saved. |
 | `details.html` | A dedicated view for rendering a single recipe's full details. |
-| `script.js` | The core application logic, API fetching, and state management. |
+| `js/main.js` | The core application logic, API fetching, and state management. |
 | `styles/` | Directory for CSS files (`common.css`, `default.css`). |
 | `js/` | Directory for theme logic (`theme-init.js`, `theme.js`). |
-| `includes/` | Contains `.inc` files (`header.inc`, `footer.inc`) fetched dynamically by `script.js`. |
+| `includes/` | Contains `.inc` files (`header.inc`, `footer.inc`) fetched dynamically by `js/main.js`. |
 
 ---
 
@@ -50,4 +50,4 @@ DishSwipe uses browser storage to manage user data and page transitions without 
 
 ### Navigation Flow
 
-Because this is a multi-page application (MPA) rather than a single-page application (SPA), routing is handled via standard HTML links. `script.js` identifies the current page using `window.location.pathname` and initializes the relevant functions (e.g., `loadRandomRecipe()` for `swipe.html` or `renderFavorites()` for `favorites.html`).
+Because this is a multi-page application (MPA) rather than a single-page application (SPA), routing is handled via standard HTML links. `js/main.js` identifies the current page using `window.location.pathname` and initializes the relevant functions (e.g., `loadRandomRecipe()` for `swipe.html` or `renderFavorites()` for `favorites.html`).
