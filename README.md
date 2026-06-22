@@ -1,53 +1,35 @@
-# DishSwipe 🍽️
+# 🍽️ DishSwipe
+A modern, interactive "Smash-or-Pass" recipe discovery web application.
 
-DishSwipe is a vanilla JavaScript web application that makes finding your next meal engaging and interactive. Users can discover new recipes "Tinder-style" via a Smash-or-Pass interface, search for specific dishes, and save their favorites for later—all powered by **TheMealDB API**.
+## 🚀 Overview
+DishSwipe transforms the way you find new meals. Instead of scrolling through endless lists, you discover recipes one by one in a Tinder-style interface. Powered by **TheMealDB API**, it allows you to quickly curate a list of favorites for your next cooking session.
 
----
+## ✨ Features
+- **Interactive Swiping**: "Smash" to save a recipe to favorites or "Pass" to skip it.
+- **Global Search**: Find specific dishes by name with a responsive results grid.
+- **Favorites Vault**: Persistent storage using `localStorage` to keep your saved meals across sessions.
+- **Deep-Dive Details**: Comprehensive recipe views including ingredients, measurements, and YouTube tutorials.
+- **Theming System**: Built-in support for multiple visual themes (including a "Neo" and "Kawaii" mode) via a dynamic theme switcher.
 
-##  Features
+## 🛠️ Technical Stack
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript.
+- **API**: [TheMealDB API](https://www.themealdb.com/api.php) for real-time recipe data.
+- **Storage**: Browser `localStorage` and `sessionStorage` for state management.
 
-* **Smash or Pass (Swipe):** Discover random recipes. Tap "Smash" (❤) to save a recipe to your favorites, or "Pass" (✖) to skip to the next one.
-* **Search Functionality:** Look up specific recipes by name.
-* **Favorites Manager:** Keep track of your saved recipes. Favorites are stored persistently in your browser.
-* **Detailed Recipe Views:** Get comprehensive meal details, including high-quality images, category tags, step-by-step instructions, ingredient lists with measurements, and direct YouTube video links.
-* **Dynamic Components:** The application uses dynamic includes for the header, footer, and theme switcher, keeping the codebase DRY (Don't Repeat Yourself).
-* **Dark/Light Theme Support:** Integrated theme switching built directly into the UI.
+## 🚀 Getting Started
+Since this is a static web application, you can run it instantly:
 
----
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/necromancer124/DishSwipe.git
+   ```
+2. Open `index.html` in any modern web browser.
 
-##  Project Structure
+## 📂 Project Structure
+- `/styles`: Contains the global CSS and theme-specific stylesheets.
+- `/js`: Core application logic and theme initialization.
+- `/includes`: Reusable HTML fragments (header/footer) to ensure a DRY codebase.
+- `*.html`: The different views (Swipe, Search, Favorites, Details).
 
-| File / Directory | Purpose |
-| --- | --- |
-| `index.html` | The landing page featuring a hero section and primary navigation CTAs. |
-| `swipe.html` | The "Smash or Pass" interface that loads random meals via the API. |
-| `search.html` | The search interface with a text input and results grid. |
-| `favorites.html` | Displays all recipes the user has saved. |
-| `details.html` | A dedicated view for rendering a single recipe's full details. |
-| `js/main.js` | The core application logic, API fetching, and state management. |
-| `styles/` | Directory for CSS files (`common.css`, `default.css`). |
-| `js/` | Directory for theme logic (`theme-init.js`, `theme.js`). |
-| `includes/` | Contains `.inc` files (`header.inc`, `footer.inc`) fetched dynamically by `js/main.js`. |
-
----
-
-## 🛠️ Technical Architecture
-
-### API Integration
-
-The application relies on [TheMealDB](https://www.themealdb.com/api.php).
-
-* **Random Recipe:** `api/json/v1/1/random.php`
-* **Search Recipe:** `api/json/v1/1/search.php?s={query}`
-* **Lookup Recipe Details:** `api/json/v1/1/lookup.php?i={id}`
-
-### State & Data Management
-
-DishSwipe uses browser storage to manage user data and page transitions without requiring a backend database.
-
-* **`localStorage`:** Uses the key `dishswipe_favs` to permanently store an array of the user's "Smashed" (favorited) recipes. This ensures data persists even if the user closes the browser.
-* **`sessionStorage`:** Uses the key `selectedMealId` to temporarily hold a recipe's ID when a user clicks a recipe card from the Search, Swipe, or Favorites pages. The `details.html` page reads this ID to fetch the full recipe, and then clears the storage.
-
-### Navigation Flow
-
-Because this is a multi-page application (MPA) rather than a single-page application (SPA), routing is handled via standard HTML links. `js/main.js` identifies the current page using `window.location.pathname` and initializes the relevant functions (e.g., `loadRandomRecipe()` for `swipe.html` or `renderFavorites()` for `favorites.html`).
+## 📜 License
+This project is licensed under the MIT License.
